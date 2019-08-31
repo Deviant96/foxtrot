@@ -37,7 +37,7 @@
 
                     <!--FORD EXPLORER-->
                     <div class="card-box-right">
-                        <a href="explorer.html">
+                        <a id="myBtn" href="explorer.html">
                         <div class="showoff-images">
                             <img src="https://ford-h.assetsadobe.com/is/image/content/dam/vdm_ford/live/en_us/ford/nameplate/explorer/2020/collections/dm/20_FRD_EPR_400088.tif?croppathe=1_3x2&wid=1440">
                         </div>
@@ -86,5 +86,80 @@
             </main>
 
         </div><!--wrapper-->
+
+        
+
+<script>
+    var window.dataLayer = window.dataLayer || []
+     
+    //Step-1: Populate product in an array //
+    var productImpressionArray = [ 
+    {
+    'name': 'Product #1',      // Name or ID is required.
+    'id': '101',
+    'price': '15.25',
+    'brand': 'Nike',
+    'category': 'Shoes',
+    'variant': 'Gray',
+    'list': 'Search Results',
+    'position': 1                  
+    }, 
+    {
+    'name': 'Product #2', // Name or ID is required.
+    'id': '102',
+    'price': '22.11',
+    'brand': 'Puma',
+    'category': 'Shoes',
+    'variant': 'Black',
+    'list': 'Search Results',
+    'position': 2
+    }, 
+    ...................
+    ]
+     
+    //Step - 2: Pass it in ecommerce object //
+    var ecommerceObject = {
+     'ecommerce' : { 'impressions' : productImpressionArray },
+    'event' : 'productImpressions'                                     //pass custom event
+     }
+     
+    //Step - 3: Push to DataLayer//
+    dataLayer.push(ecommerceObject)
+     
+    </script>
+
+<script>
+// Inititalize Click Listener //
+ 
+ 
+    document.getElementById("myBtn").addEventListener("click", displayDate);
+    
+    function displayDate() {
+        
+// Pass clicked Product in array of object //
+var productClickedArray = [{
+'name': 'Product #1',             // Name or ID is required.
+'id': '1',
+'price': '15.25',
+'brand': 'Nike',
+'category': 'Shoes',
+'variant': 'Gray',
+'position': 2
+}]
+ 
+//Pass the Product clicked data in ecommerce object //
+var ecommerceObject = {
+'ecommerce' : { 'click' : 
+{ 'products' : productClickedArray, 
+  'actionField' : {'list' : 'Search Results' }             // Pass the correct page type in place of 'Search Results'. 
+}
+},
+'event' : 'productClick'                                     //pass custom event
+}
+ 
+//Push the ecommerceObject in dataLayer
+dataLayer.push(ecommerceObject)
+    }
+    </script>
     </body>
 </html>
