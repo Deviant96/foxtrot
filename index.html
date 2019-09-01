@@ -93,61 +93,41 @@
         
 
 <script>
-    dataLayer.push({
-   "ecommerce": {
-     "currencyCode":"USD",
-     "impressions": [    //the array of products present within the listing
-      {
-         "id":"9bf1d",    //internal id or SKU
-         "name":"Boss T-Shirt",    //you should have at least Name and ID set up
-         "price":"44.00",   //use only xxxx.xx formatting
-         "brand":"Bvlgari", //manufacturer or designer
-         "category":"Men/Clothing/T-Shirts", //can be hierarchical up to 5 levels; separated by"/"
-         "position":0,    //position within the list
-         "variant":"Blue", //optional,if you need more differentiation
-         "list":"Category page"    //custom name for the list of products     
-      },
-      {   //second product
-         "id":"j6be7",
-         "name":"Comverges T-Shirt",
-         "price":"32.45",
-         "brand":"Comverges",
-         "category":"T-Shirts",
-         "position":1,
-         "list":"Category page"
-      },
-      {
-         "id":"2u3gy",
-         "name":"Kiosk T-Shirt",
-         "price":"56.70",
-         "brand":"Kiosk",
-         "category":"T-Shirts",
-         "position":1,
-         "list":"Category recommendations" //you could even include a separate list of products on the category page like a custom recommendation section
-      }
-    ]
-  }
-});
-    </script>
-
-    <script>
-    dataLayer.push({
-   "event":"EEproductClick",
-   "ecommerce": {
-     "currencyCode":"USD",
-     "click": {
-       "actionField": {"list":"category" },
-       "products": [{
-         "id":"9bf1d",
-         "name":"Boss T-Shirt",
-         "price":"37.00",
-         "brand":"Converse",
-         "category":"Men/Clothing/T-Shirts",
-         "position":"2"
-      }]
+    
+     
+    //Step-1: Populate product in an array //
+    var productImpressionArray = [ 
+    {
+    'name': 'Product #1',      // Name or ID is required.
+    'id': '101',
+    'price': '15.25',
+    'brand': 'Nike',
+    'category': 'Shoes',
+    'variant': 'Gray',
+    'list': 'Search Results',
+    'position': 1                  
+    }, 
+    {
+    'name': 'Product #2', // Name or ID is required.
+    'id': '102',
+    'price': '22.11',
+    'brand': 'Puma',
+    'category': 'Shoes',
+    'variant': 'Black',
+    'list': 'Search Results',
+    'position': 2
     }
-  }
-});
+    ]
+     
+    //Step - 2: Pass it in ecommerce object //
+    var ecommerceObject = {
+     'ecommerce' : { 'impressions' : productImpressionArray },
+    'event' : 'productImpressions'                                     //pass custom event
+     }
+     
+    //Step - 3: Push to DataLayer//
+    dataLayer.push(ecommerceObject)
+     
     </script>
 
 <script>
