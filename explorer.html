@@ -65,24 +65,24 @@
 
         </div>
 
-        <script>
-                dataLayer.push({
-               "event":"EEproductClick",
-               "ecommerce": {
-                 "currencyCode":"USD",
-                 "click": {
-                   "actionField": {"list":"category" },
-                   "products": [{
-                     "id":"9bf1d",
-                     "name":"Boss T-Shirt",
-                     "price":"37.00",
-                     "brand":"Converse",
-                     "category":"Men/Clothing/T-Shirts",
-                     "position":"2"
-                  }]
-                }
-              }
-            });
-                </script>
+<script>
+// Measure a view of product details. This example assumes the detail view occurs on pageload,
+// and also tracks a standard pageview of the details page.
+dataLayer.push({
+    'ecommerce': {
+    'detail': {
+        'actionField': {'list': 'Main Page'},    // 'detail' actions have an optional list property.
+        'products': [{
+        'name': '2020 Ford Explorer',       // Name or ID is required.
+        'id': '00001',
+        'price': '36675',
+        'brand': 'Ford',
+        'category': 'SUVs',
+        'variant': 'Blue'
+        }]
+        }
+    }
+});
+</script>
     </body>
 </html>

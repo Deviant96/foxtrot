@@ -102,23 +102,33 @@ dataLayer.push({
     'currencyCode': 'USD',                       // Local currency is optional.
     'impressions': [
         {
-        'name': 'Triblend Android T-Shirt',       // Name or ID is required.
-        'id': '12345',
-        'price': '15.25',
-        'brand': 'Google',
-        'category': 'Apparel',
-        'variant': 'Gray',
-        'list': 'Search Results',
+        'name': '2020 Ford Explorer',       // Name or ID is required.
+        'id': '00001',
+        'price': '36675',
+        'brand': 'Ford',
+        'category': 'SUVs',
+        'variant': 'Blue',
+        'list': 'Main Page',
         'position': 1
         },
         {
-        'name': 'Donut Friday Scented T-Shirt',
-        'id': '67890',
-        'price': '33.75',
-        'brand': 'Google',
-        'category': 'Apparel',
-        'variant': 'Black',
-        'list': 'Search Results',
+        'name': '2020 Mustang',
+        'id': '00002',
+        'price': '26670',
+        'brand': 'Ford',
+        'category': 'Cars',
+        'variant': 'Blue',
+        'list': 'Main Page',
+        'position': 2
+        },
+        {
+        'name': '2019 F-150 Raptor',
+        'id': '00003',
+        'price': '28155',
+        'brand': 'Ford',
+        'category': 'Trucks',
+        'variant': 'Blue',
+        'list': 'Main Page',
         'position': 2
         }]
     }
@@ -137,7 +147,7 @@ function(productObj) {
     'event': 'productClick',
     'ecommerce': {
         'click': {
-        'actionField': {'list': 'Search Results'},      // Optional list property.
+        'actionField': {'list': 'Main Page'},      // Optional list property.
         'products': [{
             'name': productObj.name,                      // Name or ID is required.
             'id': productObj.id,
