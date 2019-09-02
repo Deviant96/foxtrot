@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script data-cfasync="false" type="text/javascript">
+        <script>
+            product = []; // Containing all products of the current page
             dataLayer = [];
         </script>
         <!-- Google Tag Manager -->
@@ -39,8 +40,13 @@
                     <!--Vehicle cards----------------------------------------------->
 
                     <!--FORD EXPLORER-->
-                    <div class="card-box-right">
-                        <a href="explorer.html" onclick="dataLayer.push({'event': 'productClick'});">
+                    <div class="card-box-right productEntity"
+                    data-product_name="2020 Ford Explorer"
+                    data-product_id="00001"
+                    data-product_category="SUV"
+                    data-productlist_position="1"
+                    data-productlist_name="Main Page">
+                        <a href="explorer.html" class="productEntityClick">
                         <div class="showoff-images">
                             <img src="https://ford-h.assetsadobe.com/is/image/content/dam/vdm_ford/live/en_us/ford/nameplate/explorer/2020/collections/dm/20_FRD_EPR_400088.tif?croppathe=1_3x2&wid=1440">
                         </div>
@@ -54,8 +60,13 @@
                     </div>
 
                     <!--FORD MUSTANG-->
-                    <div class="card-box-left">
-                        <a href="mustang.html">
+                    <div class="card-box-right productEntity"
+                    data-product_name="2020 Mustang"
+                    data-product_id="00002"
+                    data-product_category="Car"
+                    data-productlist_position="2"
+                    data-productlist_name="Main Page">
+                        <a href="mustang.html" class="productEntityClick">
                         <div class="showoff-images-left">
                             <img src="https://www.ford.com/cmslibs/content/dam/vdm_ford/live/en_us/ford/nameplate/mustang/2020/collections/3-2/20_FRD_MST_42380.jpg/_jcr_content/renditions/cq5dam.web.1440.1440.jpeg">
                         </div>
@@ -69,8 +80,13 @@
                     </div>
 
                     <!--FORD RAPTOR-->
-                    <div class="card-box-right">
-                        <a href="raptor.html">
+                    <div class="card-box-right productEntity"
+                    data-product_name="2019 F-150 Raptor"
+                    data-product_id="00003"
+                    data-product_category="Truck"
+                    data-productlist_position="3"
+                    data-productlist_name="Main Page">
+                        <a href="raptor.html" class="productEntityClick">
                         <div class="showoff-images">
                             <img src="https://www.ford.com/cmslibs/content/dam/brand_ford/en_us/brand/performance/f150-raptor/highlights/3-2/19_f150_rapt_enha_mode_site_feat_10_desk.jpg/_jcr_content/renditions/cq5dam.web.768.768.jpeg">
                         </div>
@@ -92,12 +108,156 @@
 
         
 
-<script>
-// Measures product impressions and also tracks a standard
-// pageview for the tag configuration.
-// Product impressions are sent by pushing an impressions object
-// containing one or more impressionFieldObjects.
-dataLayer.push({
+<script type="application/javascript">
+
+  // Fill product array by parsing the DOM for list occurences
+  var productEntities = document.querySelectorAll('.productEntity');
+  productEntities.forEach(function (productEntity) {
+    // Map data to Google Tag Manager format
+    var productKeyMapping = {
+      'product_category': 'category',
+      'product_id': 'id',
+      'product_name': 'name',
+      'product_price': 'price',
+      'productlist_name': 'list',
+      'productlist_position': 'position'
+    };
+    var productData = {};
+    var keys = Object.keys(productKeyMapping);
+    keys.forEach(function (key) {
+      if (typeof productEntity.dataset[key] !== 'undefined') {
+        productData[productKeyMapping[key]] = productEntity.dataset[key];
+      }
+    });
+    product.push(productData);
+  });
+
+
+// Chunk dataLayer Push events, as the max HTTP request size for Google Analytics is 8192 bytes (https://developers.google.com/analytics/devguides/collection/protocol/v1/reference#using-post)
+if (product.length > 0) {
+    var maxProducts = 35; 					// Max objects that will be sent with 1 hit.
+    while (product.length) {
+      var p1 = product.splice(0, maxProducts);	// Split the product array into arrays with max 35 objects
+      dataLayer.push({
+        'ecommerce': {
+          'impressions': p1
+        },
+        'event': 'impression', // GTM Event for Impression tracking
+        'eventCategory': 'Ecommerce',
+        'eventAction': 'Impression'
+      });
+    }
+  }
+
+
+    // Fill detail array of the dataLayer if available
+    var productDetailEntity = document.querySelector('.productEntityDetailPage');
+  if (productDetailEntity) {
+    // Map data to Google Tag Manager format
+    var productKeyMapping = {
+      'product_category': 'category',
+      'product_id': 'id',
+      'product_name': 'name',
+      'product_price': 'price'
+    };
+    var productDetailData = {};
+    var keys = Object.keys(productKeyMapping);
+    keys.forEach(function (key) {
+      if (typeof productDetailEntity.dataset[key] !== 'undefined') {
+        productDetailData[productKeyMapping[key]] = productDetailEntity.dataset[key];
+      }
+    });
+    dataLayer.push({
+      'ecommerce': {
+        'detail': {
+          'products': [productDetailData]
+        }
+      },
+      'event': 'impression', // GTM Event for Impression tracking
+      'eventCategory': 'Ecommerce',
+      'eventAction': 'Impression'
+    });
+  }
+
+
+    /**
+   * Helper function to find closest ancestor (polyfill as closest is not supported by IE11)
+   * @param el DOM node to find the ancestor for
+   * @param selector Query selector string
+   * @return {HTMLElement | {matchesSelector}}
+   */
+   function findAncestor(el, selector) {
+    while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el, selector))) ;
+    return el;
+  }
+
+
+    /**
+   * Click tracking function for products
+   * @param clickedElement Clicked element
+   * @param {String} event E-Commerce click event, which will be sent to the dataLayer (e.g. productClick, addToCart, ...)
+   */
+   function trackProductClickEvent(clickedElement, event) {
+    // Get closest .productEntity DOM node contain data-attributes about the product
+    var productEntity = findAncestor(clickedElement, '.productEntity');
+    // If productEntity is available, than track information
+    if (productEntity) {
+      // Map data to Google Tag Manager format
+      var productKeyMapping = {
+        'product_category': 'category',
+        'product_id': 'id',
+        'product_name': 'name',
+        'product_price': 'price',
+        'productlist_name': 'list',
+        'productlist_position': 'position'
+      };
+      var productData = {};
+      var keys = Object.keys(productKeyMapping);
+      keys.forEach(function (key) {
+        if (typeof productEntity.dataset[key] !== 'undefined') {
+          productData[productKeyMapping[key]] = productEntity.dataset[key];
+        }
+      });
+      // Prepare ecommerce object
+      var ecommerceData = {};
+      switch (event) {
+        /*case 'addToCart':
+          productData.quantity = 1;
+          ecommerceData = {
+            'add': {
+              'actionField': {'list': productData.list},
+              'products': [productData]
+            }
+          };
+          break;
+        case 'removeFromCart':
+          productData.quantity = 1;
+          ecommerceData = {
+            'remove': {
+              'products': [productData]
+            }
+          };
+          break;*/
+        case 'productClick':
+          ecommerceData = {
+            'click': {
+              'actionField': {'list': productData.list},
+              'products': [productData]
+            }
+          };
+          break;
+      }
+      // Push product click to dataLayer
+      dataLayer.push({
+        'event': event,
+        'ecommerce': ecommerceData
+      });
+    }
+  }
+
+
+
+/*dataLayer.push({
     'ecommerce': {
     'currencyCode': 'USD',                       // Local currency is optional.
     'impressions': [
@@ -132,38 +292,7 @@ dataLayer.push({
         'position': 3
         }]
     }
-});
-</script>
-
-<script>
-/**
-    * Call this function when a user clicks on a product link. This function uses the event
-    * callback datalayer variable to handle navigation after the ecommerce data has been sent
-    * to Google Analytics.
-    * @param {Object} productObj An object representing a product.
-    */
-function(productObj) {
-    dataLayer.push({
-    'event': 'productClick',
-    'ecommerce': {
-        'click': {
-        'actionField': {'list': 'Main Page'},      // Optional list property.
-        'products': [{
-            'name': productObj.name,                      // Name or ID is required.
-            'id': productObj.id,
-            'price': productObj.price,
-            'brand': productObj.brand,
-            'category': productObj.cat,
-            'variant': productObj.variant,
-            'position': productObj.position
-            }]
-        }
-        },
-        'eventCallback': function() {
-        document.location = productObj.url
-        }
-    });
-}
+});*/
 </script>
     </body>
 </html>

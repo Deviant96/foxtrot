@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script data-cfasync="false" type="text/javascript">
-            var dataLayer = dataLayer || [];
+        <script>
+            product = []; // Containing all products of the current page
+            dataLayer = [];
         </script>
         <!-- Google Tag Manager -->
         <script data-cfasync="false">
@@ -15,7 +16,7 @@
         <!-- End Google Tag Manager -->
 
         <link rel="stylesheet" href="style.css" />
-        <title>A friend for your travel | Ford</title>
+        <title>2020 Ford Explorer | Ford</title>
     </head>
     <body>
         <!-- Google Tag Manager (noscript) -->
@@ -33,7 +34,12 @@
             </header>
 
             <main>
-                <div class="chassis">
+                <div class="chassis productEntity productEntityDetailPage"
+                data-product_name="2020 Ford Explorer"
+                data-product_id="00001"
+                data-product_category="SUV"
+                data-productlist_position="1"
+                data-productlist_name="Detail Page">
                     <h2 class="car-name">2020 Ford Explorer</h2>
                     <div id="one">
                         <img src="https://ford-h.assetsadobe.com/is/image/content/dam/vdm_ford/live/en_us/ford/nameplate/explorer/2020/collections/dm/20_frd_expl_ext_st_front_red.tif?croppathe=1_16x9&wid=1440" />
@@ -68,7 +74,7 @@
 <script>
 // Measure a view of product details. This example assumes the detail view occurs on pageload,
 // and also tracks a standard pageview of the details page.
-dataLayer.push({
+/*dataLayer.push({
     'ecommerce': {
     'detail': {
         'actionField': {'list': 'Product Page'},    // 'detail' actions have an optional list property.
@@ -82,7 +88,7 @@ dataLayer.push({
         }]
         }
     }
-});
+});*/
 </script>
     </body>
 </html>
