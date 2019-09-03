@@ -71,7 +71,7 @@ img {
     font-size: 100%;
     text-align: justify;
 }
-.vehicle-description button, .vehicle-description-left button {
+a .product {
     font-size: 1.2rem;
     position: absolute;
     bottom:10px;
@@ -167,26 +167,6 @@ p.pricing{
         height:250px;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #in-car {
