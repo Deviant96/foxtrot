@@ -71,16 +71,17 @@ img {
     font-size: 100%;
     text-align: justify;
 }
-a .product {
+.productlink {
     font-size: 1.2rem;
     position: absolute;
     bottom:10px;
-    width:100%;
+    width:95%;
     cursor:pointer;
     padding: 10px;
     border: 1px solid #FFF;
     border-radius: 4px;
     background:#47A8E5;
+    text-align: center;
 }
 .vehicle-description h2,.vehicle-description-left h2{
     margin-bottom:15px;
